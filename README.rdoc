@@ -1,0 +1,68 @@
+= Easytobookr {<img src="https://secure.travis-ci.org/evendis/easytobookr.png" />}[http://travis-ci.org/evendis/easytobookr]
+
+Easytobookr is a gem that wraps the http://easytobook.com API so that you can hook into hotel availability and booking
+without having to deal with the nitty-gritty of the API.
+
+== Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'easytobookr'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install easytobookr
+
+== The Easytobookr Cookbook
+
+=== How do I configure Easytobookr?
+
+By default, easytobookr loads with a configuration that points to the easytobook test environment.
+
+To configure production settings, use the setup block:
+
+    Easytobookr.setup do |config|
+      config.env = :production          # default is :test
+      config.username = 'my_username'
+      config.password = 'my_pasword'
+      config.campaignid = '33'
+    end
+    # NB: this will automatically set the production endpoint. If for some reason you want to use an alternative enpoint,
+    you can set the emdpoint url in the setup block:
+
+      config.endpoint = 'http://another.url'
+
+=== How do I make a direct API call?
+
+The Easytobookr class has convenience methods that map to all the standard API calls. These requests all return
+a Nokogiri::XML::Document with the full response.
+
+    Easytobookr.city_list
+    Easytobookr.city_info(city_id)
+    Easytobookr.city_hotel_list(city_id,language=:en)
+    Easytobookr.city_hotel_info(city_id,language=:en)
+    Easytobookr.hotel_availability(hotel_id,start_date,end_date,people=2,rooms=1,currency='USD',customer_ip='127.0.0.1',show_non_availability=false,language=:en)
+    Easytobookr.city_cheapest_room_availability(city_id,start_date,end_date,people=2,currency='USD',customer_ip='127.0.0.1')
+    Easytobookr.hotel_photos(hotel_id)
+    Easytobookr.all_facilities(language=:en)
+    Easytobookr.hotel_facilities(hotel_id,language=:en)
+    Easytobookr.room_facilities(room_id,language=:en)
+    Easytobookr.city_availability(city_id,start_date,end_date,rating=nil,people=2,currency='USD',customer_ip='127.0.0.1',language=:en)
+    Easytobookr.create_booking # not yet implemented
+    Easytobookr.cancel_booking # not yet implemented
+    Easytobookr.retrieve_booking # not yet implemented
+
+
+== Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+5. Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+6. Push to the branch (`git push origin my-new-feature`)
+7. Create new Pull Request

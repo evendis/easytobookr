@@ -1,5 +1,8 @@
+require "nokogiri"
 require "easytobookr/version"
 
-module Easytobookr
-  # Your code goes here...
+class Easytobookr
 end
+require "easytobookr/config"
+require "easytobookr/request"
+require "easytobookr/request_methods"
